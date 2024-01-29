@@ -22,7 +22,7 @@ public class AsyncJokeApiExecutor {
     @Async("jokeApiThreadPool")
     public CompletableFuture<JokeDto> getJokeDtoAsync() {
         try {
-             // you may add System.out.println(Thread.currentThread().getName()); in order to make sure thread pool is used
+             System.out.println(Thread.currentThread().getName());
             return CompletableFuture.completedFuture(restTemplate.getForObject(jokeDtoApiUrl, JokeDto.class));
         } catch (Exception e) {
             return CompletableFuture.completedFuture(null);

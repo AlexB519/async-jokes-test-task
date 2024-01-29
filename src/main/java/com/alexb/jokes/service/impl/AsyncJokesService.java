@@ -25,12 +25,22 @@ public class AsyncJokesService implements JokesService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You can't obtain more than 100 jokes in one request");
         }
 
+        List<JokeDto> jokes = new ArrayList<>();
+        for (int i = 0; i < count; i += 10) {
+            int batchSize = Math.min(10, count - i);
+            List<JokeDto> batch = getJokesBatch(batchSize);
+            jokes.addAll(batch);
+        }
+
+        return jokes;
+    }
+
+    private List<JokeDto> getJokesBatch(int batchSize) {
         List<CompletableFuture<JokeDto>> futures = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < batchSize; i++) {
             CompletableFuture<JokeDto> future = asyncJokeApiExecutor.getJokeDtoAsync();
             futures.add(future);
         }
-
         return getAllJokeDtos(futures);
     }
 

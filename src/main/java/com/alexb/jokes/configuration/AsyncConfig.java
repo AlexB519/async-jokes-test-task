@@ -14,9 +14,9 @@ public class AsyncConfig {
     @Bean(name = "jokeApiThreadPool")
     public TaskExecutor jokeApiThreadPool() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(10);
-        executor.setMaxPoolSize(15);
-        executor.setQueueCapacity(100);
+        executor.setCorePoolSize(50);
+        executor.setMaxPoolSize(60);
+        executor.setQueueCapacity(1500);
         executor.setThreadNamePrefix("JokeApi_Async-");
         executor.initialize();
         return executor;
